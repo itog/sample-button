@@ -17,6 +17,7 @@
 package com.example.androidthings.button;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.google.android.things.contrib.driver.button.Button;
@@ -25,6 +26,7 @@ import com.google.android.things.pio.Gpio;
 import com.google.android.things.pio.PeripheralManagerService;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.widget.TextView;
 
 import java.io.IOException;
 
@@ -42,11 +44,16 @@ public class ButtonActivity extends Activity {
 
     private Gpio mLedGpio;
     private ButtonInputDriver mButtonInputDriver;
+    private TextView mText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG, "Starting ButtonActivity");
+        setContentView(R.layout.button_activity);
+
+        mText = (TextView)findViewById(R.id.textView);
+        mText.setBackgroundColor(Color.BLACK);
 
         PeripheralManagerService pioService = new PeripheralManagerService();
         try {
@@ -72,6 +79,7 @@ public class ButtonActivity extends Activity {
         if (keyCode == KeyEvent.KEYCODE_SPACE) {
             // Turn on the LED
             setLedValue(true);
+            mText.setBackgroundColor(Color.RED);
             return true;
         }
 
@@ -83,6 +91,7 @@ public class ButtonActivity extends Activity {
         if (keyCode == KeyEvent.KEYCODE_SPACE) {
             // Turn off the LED
             setLedValue(false);
+            mText.setBackgroundColor(Color.BLACK);
             return true;
         }
 
